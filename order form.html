@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sugar Cafe Menu</title>
+    <style>
+        /* Existing styles... */
+        .rate {
+            float: right;
+            height: 46px;
+            padding: 0 10px;
+        }
+        .rate:not(:checked) > input {
+            position:absolute;
+            top:-9999px;
+        }
+        .rate:not(:checked) > label {
+            float:right;
+            width:1em;
+            overflow:hidden;
+            white-space:nowrap;
+            cursor:pointer;
+            font-size:30px;
+            color:#ccc;
+        }
+        .rate:not(:checked) > label:before {
+            content: '★ ';
+        }
+        .rate > input:checked ~ label {
+            color: #ffc700;    
+        }
+        .rate:not(:checked) > label:hover,
+        .rate:not(:checked) > label:hover ~ label {
+            color: #deb217;  
+        }
+        .rate > input:checked + label:hover,
+        .rate > input:checked + label:hover ~ label,
+        .rate > input:checked ~ label:hover,
+        .rate > input:checked ~ label:hover ~ label,
+        .rate > label:hover ~ input:checked ~ label {
+            color: #c59b08;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <h1>Sugar Cafe Menu</h1>
+        <div class="menu-category">
+            <h2>Coffee</h2>
+            <div class="menu-item">
+                <p>Espresso <span>$2.00</span></p>
+                <div class="rate">
+                    <input type="radio" id="star5-espresso" name="rate-espresso" value="5" /><label for="star5-espresso" title="text">5 stars</label>
+                    <input type="radio" id="star4-espresso" name="rate-espresso" value="4" /><label for="star4-espresso" title="text">4 stars</label>
+                    <input type="radio" id="star3-espresso" name="rate-espresso" value="3" /><label for="star3-espresso" title="text">3 stars</label>
+                    <input type="radio" id="star2-espresso" name="rate-espresso" value="2" /><label for="star2-espresso" title="text">2 stars</label>
+                    <input type="radio" id="star1-espresso" name="rate-espresso" value="1" /><label for="star1-espresso" title="text">1 star</label>
+                </div>
+            </div>
+            <!-- Additional items with similar rating structure -->
+        </div>
+        <!-- Additional categories -->
+    </div>
+    <script>
+        document.querySelectorAll('.rate input').forEach(input => {
+            input.addEventListener('change', function(event) {
+                alert(`Thanks for rating ${event.target.value} stars!`);
+            });
+        });
+    </script>
+</body>
+</html>
