@@ -3,71 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sugar Cafe Menu</title>
+    <title>Order Menu Items</title>
     <style>
-        /* Existing styles... */
-        .rate {
-            float: right;
-            height: 46px;
-            padding: 0 10px;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
         }
-        .rate:not(:checked) > input {
-            position:absolute;
-            top:-9999px;
+        form, .menu-item {
+            margin: 20px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
         }
-        .rate:not(:checked) > label {
-            float:right;
-            width:1em;
-            overflow:hidden;
-            white-space:nowrap;
-            cursor:pointer;
-            font-size:30px;
-            color:#ccc;
+        label {
+            margin-right: 10px;
         }
-        .rate:not(:checked) > label:before {
-            content: '★ ';
+        input[type="number"] {
+            width: 50px;
         }
-        .rate > input:checked ~ label {
-            color: #ffc700;    
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
-        .rate:not(:checked) > label:hover,
-        .rate:not(:checked) > label:hover ~ label {
-            color: #deb217;  
-        }
-        .rate > input:checked + label:hover,
-        .rate > input:checked + label:hover ~ label,
-        .rate > input:checked ~ label:hover,
-        .rate > input:checked ~ label:hover ~ label,
-        .rate > label:hover ~ input:checked ~ label {
-            color: #c59b08;
+        .error {
+            color: red;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
-    <div class="menu-container">
-        <h1>Sugar Cafe Menu</h1>
-        <div class="menu-category">
-            <h2>Coffee</h2>
-            <div class="menu-item">
-                <p>Espresso <span>$2.00</span></p>
-                <div class="rate">
-                    <input type="radio" id="star5-espresso" name="rate-espresso" value="5" /><label for="star5-espresso" title="text">5 stars</label>
-                    <input type="radio" id="star4-espresso" name="rate-espresso" value="4" /><label for="star4-espresso" title="text">4 stars</label>
-                    <input type="radio" id="star3-espresso" name="rate-espresso" value="3" /><label for="star3-espresso" title="text">3 stars</label>
-                    <input type="radio" id="star2-espresso" name="rate-espresso" value="2" /><label for="star2-espresso" title="text">2 stars</label>
-                    <input type="radio" id="star1-espresso" name="rate-espresso" value="1" /><label for="star1-espresso" title="text">1 star</label>
-                </div>
-            </div>
-            <!-- Additional items with similar rating structure -->
+    <h1>Order Your Favorite Items</h1>
+    <form id="orderForm">
+        <div class="menu-item">
+            <label for="espresso">Espresso:</label>
+            <input type="number" id="espresso" name="espresso" min="1" max="10" value="1">
         </div>
-        <!-- Additional categories -->
-    </div>
+        <div class="menu-item">
+            <label for="americano">Americano:</label>
+            <input type="number" id="americano" name="americano" min="1" max="10" value="1">
+        </div>
+        <div class="menu-item">
+            <label for="latte">Latte:</label>
+            <input type="number" id="latte" name="latte" min="1" max="10" value="1">
+        </div>
+        <input type="submit" value="Submit Order">
+        <div id="orderError" class="error"></div>
+    </form>
+
     <script>
-        document.querySelectorAll('.rate input').forEach(input => {
-            input.addEventListener('change', function(event) {
-                alert(`Thanks for rating ${event.target.value} stars!`);
+        document.getElementById('orderForm').onsubmit = function(event) {
+            event.preventDefault(); // Prevent form from submitting normally
+            let isValid = true;
+            let errorMessage = "";
+
+            // Array of item IDs to check
+            const items = ['espresso', 'americano', 'latte'];
+
+            items.forEach(function(item) {
+                const quantity = document.getElementById(item).value;
+                if (quantity < 1 || quantity > 10 || isNaN(quantity)) {
+                    isValid = false;
+                    errorMessage += `Quantity for ${item.charAt(0).toUpperCase() + item.slice(1)} must be between 1 and 10 and a valid number.\n`;
+                }
             });
-        });
+
+            if (isValid) {
+                this.submit(); // Submit the form if all validations pass
+                alert('Order placed successfully!');
+            } else {
+                document.getElementById('orderError').textContent = errorMessage;
+            }
+        };
     </script>
 </body>
 </html>
