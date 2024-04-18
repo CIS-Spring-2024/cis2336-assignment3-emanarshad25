@@ -18,7 +18,7 @@
 
         header, footer {
             width: 100%;
-            background-color: #333;
+            background-color: #eb9494;
             color: white;
             padding: 10px 20px;
             text-align: center;
@@ -75,15 +75,19 @@
     </header>
     <main>
         <section>
-            <h2>Order Your Favorite Drinks</h2>
+            <h2>Order Here</h2>
             <form id="orderForm">
                 <div class="form-item">
                     <label for="espresso">Espresso:</label>
-                    <input type="number" id="espresso" name="espresso" min="1" max="10" value="1">
+                    <input type="number" id="espresso" name="espresso" min="0" max="10" value="1">
+                </div>
+                <div class="form-item">
+                    <label for="americano">Americano:</label>
+                    <input type="number" id="americano" name="americano" min="0" max="10" value="1">
                 </div>
                 <div class="form-item">
                     <label for="latte">Latte:</label>
-                    <input type="number" id="latte" name="latte" min="1" max="10" value="1">
+                    <input type="number" id="latte" name="latte" min="0" max="10" value="1">
                 </div>
                 <button type="submit">Submit Order</button>
                 <div id="feedback" class="error"></div>
